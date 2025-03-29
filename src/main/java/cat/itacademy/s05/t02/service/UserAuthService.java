@@ -23,13 +23,11 @@ public class UserAuthService {
         this.passwordEncoder = new BCryptPasswordEncoder();
     }
 
-    // Registro de usuario
-    public User registerUser(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword())); // Encripta la contraseña
-        return userRepository.save(user);
+    public void registerUser(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        userRepository.save(user);
     }
 
-    // Autenticación de usuario
     public String authenticate(AuthRequest authRequest) {
         Optional<User> userOpt = userRepository.findByEmail(authRequest.getEmail());
 

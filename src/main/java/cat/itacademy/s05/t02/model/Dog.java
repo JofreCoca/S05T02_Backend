@@ -1,11 +1,9 @@
 package cat.itacademy.s05.t02.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
+@Table(name= "DOGS")
 public class Dog {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

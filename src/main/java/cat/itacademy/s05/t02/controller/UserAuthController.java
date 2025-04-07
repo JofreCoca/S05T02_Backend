@@ -2,10 +2,17 @@ package cat.itacademy.s05.t02.controller;
 
 import cat.itacademy.s05.t02.dtos.AuthRequest;
 import cat.itacademy.s05.t02.dtos.AuthResponse;
+import cat.itacademy.s05.t02.exception.UserNotFoundException;
 import cat.itacademy.s05.t02.model.User;
 import cat.itacademy.s05.t02.service.UserAuthService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/auth")
@@ -19,14 +26,26 @@ public class UserAuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody User user) {
+    public ResponseEntity<Map<String, String>> register(@RequestBody User user) {
+        if (authService.existsByEmail(user.getEmail())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(Map.of("message", "Ya existe una cuenta asociada a este correo electrónico. Por favor, inicia sesión o usa otro correo para registrarte."));
+        }
         authService.registerUser(user);
-        return ResponseEntity.ok("Usuario registrado exitosamente");
+        return ResponseEntity.ok(Map.of("message", "Usuario registrado exitosamente"));
     }
 
     @PostMapping("/login")
-    public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest authRequest) {
-        String token = authService.authenticate(authRequest);
-        return ResponseEntity.ok(new AuthResponse(token));
+    public ResponseEntity<AuthResponse> login(@RequestBody User user) {
+        return ResponseEntity.ok(new AuthResponse(authService.authenticate(user), user.getEmail()));
+    }
+
+    @GetMapping("/{idusers}")
+    public ResponseEntity<User> getUserById(@PathVariable int id) {
+        User user = authService.findById(id);
+        if (user == null) {
+            throw new UserNotFoundException("User not found with id: " + id);
+        }
+        return ResponseEntity.ok(user);
     }
 }

@@ -13,13 +13,13 @@ public class User {
     private String email;
     private String password;
     private LocalDateTime registration_date;
-    private String photo_url;
+    private String photo_url  = "";
 
-    public int getIdusers() {
+    public int getId() {
         return idusers;
     }
 
-    public void setIdusers(int idusers) {
+    public void setId(int idusers) {
         this.idusers = idusers;
     }
 

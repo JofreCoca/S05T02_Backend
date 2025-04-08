@@ -1,17 +1,13 @@
 package cat.itacademy.s05.t02.controller;
 
-import cat.itacademy.s05.t02.dtos.AuthRequest;
 import cat.itacademy.s05.t02.dtos.AuthResponse;
 import cat.itacademy.s05.t02.exception.UserNotFoundException;
 import cat.itacademy.s05.t02.model.User;
 import cat.itacademy.s05.t02.service.UserAuthService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -37,7 +33,7 @@ public class UserAuthController {
 
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(@RequestBody User user) {
-        return ResponseEntity.ok(new AuthResponse(authService.authenticate(user), user.getEmail()));
+        return ResponseEntity.ok(new AuthResponse(authService.authenticate(user)));
     }
 
     @GetMapping("/{idusers}")

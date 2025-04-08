@@ -1,6 +1,5 @@
 package cat.itacademy.s05.t02.service;
 
-import cat.itacademy.s05.t02.dtos.AuthRequest;
 import cat.itacademy.s05.t02.model.User;
 import cat.itacademy.s05.t02.repository.UserRepository;
 import cat.itacademy.s05.t02.security.JwtUtil;
@@ -45,9 +44,9 @@ public class UserAuthService {
     public String authenticate(User user) {
         Optional<User> user2 = userRepository.findByEmail(user.getEmail());
         if(user2.isPresent()){
-            User userOptional = user2.get();
+           User userOptional = user2.get();
             if (passwordEncoder.matches((user.getPassword()), userOptional.getPassword())) {
-                return jwtUtil.generateToken(user.getEmail());
+                return jwtUtil.generateToken(userOptional);
             }
         }
         throw new RuntimeException("Credenciales incorrectas");

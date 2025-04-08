@@ -10,6 +10,8 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idusers;
+    @Enumerated(EnumType.STRING)
+    private Role role = Role.USER;
     private String email;
     private String password;
     private LocalDateTime registration_date;
@@ -17,6 +19,22 @@ public class User {
 
     public int getId() {
         return idusers;
+    }
+
+    public int getIdusers() {
+        return idusers;
+    }
+
+    public void setIdusers(int idusers) {
+        this.idusers = idusers;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role rol) {
+        this.role = rol;
     }
 
     public void setId(int idusers) {

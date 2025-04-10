@@ -19,12 +19,13 @@ public class JwtUtil {
 
         System.out.println("key "+SECRET_KEY);
         Map<String, String> claims = new HashMap<>();
+        claims.put("idusers", Integer.toString(user.getId()));
+        claims.put("role", user.getRole().toString());
         claims.put("user", user.getEmail());
         claims.put("photo_url", user.getPhoto_url());
 
         return Jwts.builder()
                 .setClaims(claims)
-               // .setSubject(email)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60)) // 1 hora
                 .signWith(SignatureAlgorithm.HS256, SECRET_KEY)

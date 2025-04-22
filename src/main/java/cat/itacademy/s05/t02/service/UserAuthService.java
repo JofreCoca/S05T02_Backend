@@ -17,14 +17,6 @@ public class UserAuthService {
     private final JwtUtil jwtUtil;
     private final PasswordEncoder passwordEncoder;
 
-    public User findByEmail(String email) {
-        return userRepository.findByEmail(email).orElse(null);
-    }
-
-    public User findById(int idusers) {
-        return userRepository.findById(idusers).orElseThrow(() -> new RuntimeException("User not found"));
-    }
-
     public UserAuthService(UserRepository userRepository, JwtUtil jwtUtil) {
         this.userRepository = userRepository;
         this.jwtUtil = jwtUtil;
@@ -50,5 +42,14 @@ public class UserAuthService {
             }
         }
         throw new RuntimeException("Credenciales incorrectas");
+    }
+
+
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email).orElse(null);
+    }
+
+    public User findById(int idusers) {
+        return userRepository.findById(idusers).orElseThrow(() -> new RuntimeException("User not found"));
     }
 }

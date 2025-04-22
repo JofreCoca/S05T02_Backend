@@ -11,6 +11,7 @@ public class Dog {
     private String name;
     private String breed;
     private int age;
+    @Enumerated(EnumType.STRING)
     private Gender gender;
     private String photo_url;
     private int users_idusers;

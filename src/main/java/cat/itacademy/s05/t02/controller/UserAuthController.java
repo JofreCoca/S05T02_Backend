@@ -35,13 +35,4 @@ public class UserAuthController {
     public ResponseEntity<AuthResponse> login(@RequestBody User user) {
         return ResponseEntity.ok(new AuthResponse(authService.authenticate(user)));
     }
-
-    @GetMapping("/{idusers}")
-    public ResponseEntity<User> getUserById(@PathVariable int id) {
-        User user = authService.findById(id);
-        if (user == null) {
-            throw new UserNotFoundException("User not found with id: " + id);
-        }
-        return ResponseEntity.ok(user);
-    }
 }

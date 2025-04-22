@@ -9,24 +9,24 @@ import java.time.LocalDateTime;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idusers;
+    private int id;
     @Enumerated(EnumType.STRING)
     private Role role = Role.USER;
+    @Column(name = "email", length = 255, nullable = false)
     private String email;
+    @Column(name = "password", length = 255, nullable = false)
     private String password;
+    @Column(name = "LocalDateTime", nullable = false)
     private LocalDateTime registration_date;
-    private String photo_url  = "";
+    @Column(name = "photo_url", length = 255, nullable = false)
+    private String photo_url  = "clicaUser.png";
 
     public int getId() {
-        return idusers;
+        return id;
     }
 
-    public int getIdusers() {
-        return idusers;
-    }
-
-    public void setIdusers(int idusers) {
-        this.idusers = idusers;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public Role getRole() {
@@ -35,10 +35,6 @@ public class User {
 
     public void setRole(Role rol) {
         this.role = rol;
-    }
-
-    public void setId(int idusers) {
-        this.idusers = idusers;
     }
 
     public String getEmail() {

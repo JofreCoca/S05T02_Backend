@@ -8,11 +8,14 @@ public class Dog {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int iddogs;
+    @Column(name = "name", length = 100, nullable = false)
     private String name;
+    @Column(name = "breed", length = 100, nullable = false)
     private String breed;
     private int age;
     @Enumerated(EnumType.STRING)
     private Gender gender;
+    @Column(name = "photo_url", length = 255, nullable = false)
     private String photo_url;
     private int users_idusers;
 

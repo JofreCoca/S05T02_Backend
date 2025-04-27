@@ -1,0 +1,54 @@
+package cat.itacademy.s05.t02.controller;
+
+import cat.itacademy.s05.t02.model.Dog;
+import cat.itacademy.s05.t02.model.User;
+import cat.itacademy.s05.t02.service.DogService;
+import jakarta.servlet.http.HttpServletRequest;
+import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.net.MalformedURLException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
+
+@RestController
+@RequestMapping("/dog")
+public class DogController {
+    @Autowired
+    private DogService dogService;
+
+    @PostMapping("/create")
+    ResponseEntity<String> create(@RequestBody Dog dog){
+        dogService.create(dog);
+        return ResponseEntity.ok("Dog created successfully.");
+    }
+
+    @PostMapping("/delete")
+    ResponseEntity<String> delete(@RequestBody Dog dog){
+        dogService.delete(dog);
+        return ResponseEntity.ok("Dog delete successfully.");
+    }
+
+    @PostMapping("/update")
+    ResponseEntity<String> update(@RequestBody Dog dog){
+        dogService.update(dog);
+        return ResponseEntity.ok("Dog update successfully.");
+    }
+
+    @GetMapping("/getAll")
+    public ResponseEntity<List<Dog>> getAll(HttpServletRequest request) {
+        String token = request.getHeader("Authorization");
+        System.out.println(""+token);
+        return ResponseEntity.ok(dogService.getAll(request));
+    }
+
+}

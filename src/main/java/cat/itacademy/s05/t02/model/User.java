@@ -19,7 +19,7 @@ public class User {
     @Column(name = "LocalDateTime", nullable = false)
     private LocalDateTime registration_date;
     @Column(name = "photo_url", length = 255, nullable = false)
-    private String photo_url  = "clicaUser.png";
+    private String photo_url  = "user.png";
 
     public int getId() {
         return id;

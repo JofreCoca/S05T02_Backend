@@ -14,7 +14,7 @@ import java.util.Map;
 @Component
 public class JwtUtil {
 
-    private final String SECRET_KEY = "404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970";
+    private static final String SECRET_KEY = "404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970";
 
     public String generateToken(User user) {
         Map<String, String> claims = new HashMap<>();
@@ -40,8 +40,12 @@ public class JwtUtil {
         return Integer.parseInt(getClaims(token).get("idusers", String.class));
     }
 
-    public String extractEmail(String token) {
+    public static String extractEmail(String token) {
         return getClaims(token).get("email", String.class);
+    }
+
+    public static String extractRole(String token) {
+        return getClaims(token).get("role", String.class);
     }
 
 
@@ -50,7 +54,7 @@ public class JwtUtil {
     }
 
 
-    private Claims getClaims(String token) {
+    private static Claims getClaims(String token) {
         return Jwts.parser()
                 .setSigningKey(SECRET_KEY)
                 .parseClaimsJws(token)

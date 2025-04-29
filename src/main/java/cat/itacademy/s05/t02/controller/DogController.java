@@ -14,6 +14,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -25,6 +26,8 @@ import java.util.List;
 public class DogController {
     @Autowired
     private DogService dogService;
+    private final Path rootLocation = Paths.get("uploads/dogs"); // Carpeta donde están las fotos
+
 
     @PostMapping("/create")
     ResponseEntity<String> create(@RequestBody Dog dog){
@@ -32,14 +35,15 @@ public class DogController {
         return ResponseEntity.ok("Dog created successfully.");
     }
 
-    @PostMapping("/delete")
-    ResponseEntity<String> delete(@RequestBody Dog dog){
-        dogService.delete(dog);
+    @DeleteMapping("/delete/{id}")
+    ResponseEntity<String> delete(@PathVariable int id, HttpServletRequest request){
+        dogService.delete(id, request);
         return ResponseEntity.ok("Dog delete successfully.");
     }
 
-    @PostMapping("/update")
+    @PutMapping ("/update")
     ResponseEntity<String> update(@RequestBody Dog dog){
+        System.out.println(dog.getIddogs());
         dogService.update(dog);
         return ResponseEntity.ok("Dog update successfully.");
     }
@@ -50,5 +54,4 @@ public class DogController {
         System.out.println(""+token);
         return ResponseEntity.ok(dogService.getAll(request));
     }
-
 }

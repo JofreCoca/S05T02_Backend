@@ -43,7 +43,6 @@ public class DogController {
 
     @PutMapping ("/update")
     ResponseEntity<String> update(@RequestBody Dog dog){
-        System.out.println(dog.getIddogs());
         dogService.update(dog);
         return ResponseEntity.ok("Dog update successfully.");
     }
@@ -51,7 +50,6 @@ public class DogController {
     @GetMapping("/getAll")
     public ResponseEntity<List<Dog>> getAll(HttpServletRequest request) {
         String token = request.getHeader("Authorization");
-        System.out.println(""+token);
         return ResponseEntity.ok(dogService.getAll(request));
     }
 }

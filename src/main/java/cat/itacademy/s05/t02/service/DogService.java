@@ -64,9 +64,13 @@ public class DogService {
         String username = jwtUtil.extractEmail(token);
         User user = userRepository.findByEmail(username)
                 .orElseThrow(() -> new UserNotFoundException("player not found."));
-        return dogRepository.findAll()
-                .stream()
-                .filter(dog -> dog.getUsers_idusers() == user.getId())
-                .collect(Collectors.toList());
+        if(user.getRole().name().equals("ADMIN")){
+            return dogRepository.findAll();
+        }else{
+            return dogRepository.findAll()
+                    .stream()
+                    .filter(dog -> dog.getUsers_idusers() == user.getId())
+                    .collect(Collectors.toList());
+        }
     }
 }
